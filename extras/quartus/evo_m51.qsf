@@ -1,0 +1,32 @@
+#==============================================================================
+# Copyright (c) 2020 Alorium Technology.  All right reserved.
+#==============================================================================
+#
+# File Name  : evo_m51.qsf
+# Author     : Steve Phillips
+# Contact    : support@aloriumtech.com
+# Description:
+#
+#
+# Quartus settings for Evo project
+#  http://www.aloriumtech.com/evo
+#  https://github.com/AloriumTechnology
+#==============================================================================
+
+
+# Set device specific stuff
+set_global_assignment -name DEVICE 10M25DAF256C8G
+##SJP##DONT NEED THIS??##set_global_assignment -name QIP_FILE  ../../../evo_bsp/extras/quartus/ip/max10flash_10M25DAF256C7G/max10flash/synthesis/max10flash.qip
+set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "DUAL IMAGES"
+
+# Specify PARAMETER values as decimal numbers for Quartus
+set_parameter -name DC_COMPACT    0 
+set_parameter -name DC_FPGA_SIZE 25 
+
+# Set the EVO_INFO values that match the BSP QXP
+source ../../../evo_bsp/extras/quartus/evo_info.qsf
+
+# Source the common stuf that applies to any device
+source ../../../evo_bsp/extras/quartus/evo_common.qsf
+
+## EOF ###
