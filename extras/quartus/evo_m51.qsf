@@ -16,7 +16,6 @@
 
 # Set device specific stuff
 set_global_assignment -name DEVICE 10M25DAF256C8G
-##SJP##DONT NEED THIS??##set_global_assignment -name QIP_FILE  ../../../evo_bsp/extras/quartus/ip/max10flash_10M25DAF256C7G/max10flash/synthesis/max10flash.qip
 set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "DUAL IMAGES"
 
 # Specify PARAMETER values as decimal numbers for Quartus

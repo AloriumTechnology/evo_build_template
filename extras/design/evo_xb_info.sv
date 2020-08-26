@@ -36,11 +36,12 @@ module evo_xb_info
     parameter EVO_XB_INFO_NUM_ADDR = 32'h0,  // Address of XB_INFO_NUM value
     parameter EVO_XB_INFO_NUM_VAL  = 32'h6,  // Number of additional XB_INFO regs
     parameter EVO_XB_INFO_VENDOR_ADDR = 32'h1, // Address and Value for Vendor name
-    parameter EVO_XB_INFO_VENDOR_VAL  = "ALO ",
+    parameter EVO_XB_INFO_VENDOR_VAL  = " ALO",
     parameter EVO_XB_INFO_MODEL_ADDR = 32'h2,  // Address and Value for product Model 
-    parameter EVO_XB_INFO_MODEL_VAL  = "EVO ",
+    parameter EVO_XB_INFO_MODEL_VAL  = " EVO",
     parameter EVO_XB_INFO_TYPE_ADDR = 32'h3,   // Address and Value for XB Type
-    parameter EVO_XB_INFO_TYPE_VAL  = "SERV",
+    parameter EVO_XB_INFO_TYPE_VAL  = "DFLT",
+    // --------- Example CSRs. Remove these and add your own custom CSRs instead -------
     // Example of defining a Decimal value
     parameter EVO_XB_INFO_EXAMPLE_DECIMAL_ADDR = 32'h4,          // Address of EXAMPLE_DECIMAL
     parameter EVO_XB_INFO_EXAMPLE_DECIMAL_VAL  = 32'd4294967295, // Largest possible integer value
@@ -50,6 +51,7 @@ module evo_xb_info
     // Example of defining a Char value. NOTE: Maximum size is 4 chars
     parameter EVO_XB_INFO_EXAMPLE_CHAR_ADDR = 32'h6,             // Address of EXAMPLE_CHAR
     parameter EVO_XB_INFO_EXAMPLE_CHAR_VAL  = "TEST"             // Four characters: "TEST"
+    // ----------End of Example CSRs ---------------------------------------------------
     )
    (input                         clk,
     input                         rstn,
@@ -63,11 +65,12 @@ module evo_xb_info
     output logic [CSR_DWIDTH-1:0] avs_csr_readdata
     );
    
-   logic                          info_sel;
+   logic                          info_sel, info_re;
    logic [CSR_DWIDTH-1:0]         info_f;
    logic [CSR_DWIDTH-1:0]         info_val;
    
    always_comb info_sel  = (avs_csr_address[CSR_AWIDTH-1:0] == EVO_XB_INFO_ADDR);
+   always_comb info_re   = info_sel && avs_csr_read;
 
    always_ff @(posedge clk or negedge rstn) begin
       info_f <=  (!rstn)                     ? EVO_INFO_RST_VAL        : // reset  
@@ -88,16 +91,18 @@ module evo_xb_info
         EVO_XB_INFO_VENDOR_ADDR          : info_val = EVO_XB_INFO_VENDOR_VAL;
         EVO_XB_INFO_MODEL_ADDR           : info_val = EVO_XB_INFO_MODEL_VAL;
         EVO_XB_INFO_TYPE_ADDR            : info_val = EVO_XB_INFO_TYPE_VAL;
+        // --------- Example CSRs. Remove these and add your own custom CSRs instead ---
         EVO_XB_INFO_EXAMPLE_DECIMAL_ADDR : info_val = EVO_XB_INFO_EXAMPLE_DECIMAL_VAL ;
         EVO_XB_INFO_EXAMPLE_HEX_ADDR     : info_val = EVO_XB_INFO_EXAMPLE_HEX_VAL ;
         EVO_XB_INFO_EXAMPLE_CHAR_ADDR    : info_val = EVO_XB_INFO_EXAMPLE_CHAR_VAL ;
+        // ----------End of Example CSRs -----------------------------------------------
         default : info_val = 0;
       endcase // unique case (info_f)
    end // always_comb
    
    // Assert bus outputs
    always_ff @(posedge clk) begin
-      avs_csr_readdatavalid <= info_sel;
+      avs_csr_readdatavalid <= info_re;
       avs_csr_readdata      <= ({CSR_DWIDTH{info_sel}} & info_val);
    end
    
