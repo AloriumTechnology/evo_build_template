@@ -36,6 +36,12 @@ puts "# - Convert the RPD file to an EVO_IMG format"
 if { $OS == "Windows" } {
     # We have to be in the evo_flashload dir to run it
     cd ../../../evo_bsp/extras/tools/evo_flashload/windows
+    if { [file exists "evo_flashload"] } {
+        file rename "evo_flashload" "evo_flashload.exe"
+    }
+    if { [file exists "bossac"] } {
+        file rename "bossac" "bossac.exe"
+    }
     exec ./evo_flashload.exe --convert \
         -i  ../../../../../evo_build/extras/quartus/reports/evo_m51_cfm1_auto.rpd \
         -o ../../../../../evo_build/extras/quartus/reports/evo_m51.evo_img

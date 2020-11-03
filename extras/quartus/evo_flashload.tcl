@@ -50,6 +50,12 @@ set OS [lindex $tcl_platform(os) 0]
 
 if { $OS == "Windows" } {           # Windows
     puts "   Load evo_m51.evo_img to Evo FPGA"
+    if { [file exists "|../../../evo_bsp/extras/tools/evo_flashload/windows/evo_flashload"] } {
+        file rename "|../../../evo_bsp/extras/tools/evo_flashload/windows/evo_flashload" "|../../../evo_bsp/extras/tools/evo_flashload/windows/evo_flashload.exe"
+    }
+    if { [file exists "|../../../evo_bsp/extras/tools/evo_flashload/windows/bossac"] } {
+        file rename "|../../../evo_bsp/extras/tools/evo_flashload/windows/bossac" "|../../../evo_bsp/extras/tools/evo_flashload/windows/bossac.exe"
+    }
     set fload [open "|../../../evo_bsp/extras/tools/evo_flashload/windows/evo_flashload.exe -i reports/evo_m51.evo_img "  r]
     while { ![eof $fload]} {
         gets $fload fload_line
