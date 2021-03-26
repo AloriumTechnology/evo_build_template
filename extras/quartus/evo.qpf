@@ -27,4 +27,5 @@ DATE = "16:19:34  February 09, 2020"
 
 # Revisions
 
-PROJECT_REVISION = "evo_m51"
+PROJECT_REVISION = "evo_m51_10M25"
+PROJECT_REVISION = "evo_m51_10M50"
