@@ -1,7 +1,7 @@
-#=================================================================
+#================================================================================
 #  Copyright(c) Alorium Technology Group Inc., 2020
 #  ALL RIGHTS RESERVED
-#=================================================================
+#================================================================================
 #
 # File name:  : evo_build_template/extras/quartus/openevo.qsf
 # Author      : Steve Phillips
@@ -19,8 +19,46 @@
 #
 # set_global_assignment -name SYSTEMVERILOG_FILE $OPENEVO_PATH/extras/design/user_xb.sv
 #
-#=================================================================
+#================================================================================
 
-# Examples from the EvoD2F XB
+#--------------------------------------------------------------------------------
+# Uncomment the following line if your XB predates the evo_bsp version
+# 1.x, which introduced support for user-customized clocks. That
+# changed some of the port names for the evo_xb, but setting the
+# EVO_CLK_ORIGINAL macro will allow your older XB to work without
+# changes.
+
+# set_global_assignment -name VERILOG_MACRO "EVO_CLK_ORIGINAL=1"
+
+#--------------------------------------------------------------------------------
+# Change the values below to create alterative, custom clocks from the
+#  PLL, which are then available for use in the evo_xb.sv module.
+
+# PLL_CLK2: Default setting create a 16MHz clock
+set_parameter -name  EVO_PLL_CLK2_DIVIDE_BY    3
+set_parameter -name  EVO_PLL_CLK2_DUTY_CYCLE   50
+set_parameter -name  EVO_PLL_CLK2_MULTIPLY_BY  4
+set_parameter -name  EVO_PLL_CLK2_PHASE_SHIFT  "0"
+
+# PLL_CLK3: Default setting create a 32MHz clock
+set_parameter -name  EVO_PLL_CLK3_DIVIDE_BY    3
+set_parameter -name  EVO_PLL_CLK3_DUTY_CYCLE   50
+set_parameter -name  EVO_PLL_CLK3_MULTIPLY_BY  8
+set_parameter -name  EVO_PLL_CLK3_PHASE_SHIFT  "0"
+
+# PLL_CLK4: Default setting create a 12MHz clock
+set_parameter -name  EVO_PLL_CLK4_DIVIDE_BY    1
+set_parameter -name  EVO_PLL_CLK4_DUTY_CYCLE   50
+set_parameter -name  EVO_PLL_CLK4_MULTIPLY_BY  1
+set_parameter -name  EVO_PLL_CLK4_PHASE_SHIFT  "0"
+
+
+#--------------------------------------------------------------------------------
+# Add any additiona custom setting below. Typically this consists of
+#  specifying the new verilog files you are adding to the design
+
+# Example specification of new verilog files. Note that $OPENEVO_PATH
+#  is already set to point to your XB directory
+
 #set_global_assignment -name SYSTEMVERILOG_FILE $OPENEVO_PATH/extras/design/evo_d2f.sv
 #set_global_assignment -name SYSTEMVERILOG_FILE $OPENEVO_PATH/extras/design/evo_example.sv

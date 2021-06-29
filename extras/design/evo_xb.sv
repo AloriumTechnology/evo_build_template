@@ -84,19 +84,20 @@
 
 module evo_xb
    (// Basic clock and reset
-    input                            clk,
-    input                            reset_n,
+    input 			     clk,
+    input 			     reset_n,
     // Other clocks and reset
-    input                            pwr_on_nrst,
-    input                            pll_locked,
-    input                            clk_bsp,
-    input                            clk_60,
-    input                            clk_120,
-    input                            clk_16,
-    input                            clk_32,
-    input                            en16mhz,
-    input                            en1mhz,
-    input                            en128khz,
+    input 			     pwr_on_nrst,
+    input 			     pll_locked,
+    input 			     clk_bsp,
+    input 			     clk_60,
+    input 			     clk_120,
+    input 			     pll_clk2, 
+    input 			     pll_clk3, 
+    input 			     pll_clk4, 
+    input 			     en20mhz,
+    input 			     en1mhz,
+    input 			     en128khz,
     // PMUX connections
     output logic [PORT_D_DWIDTH-1:0] port_d_pmux_dir_o,
     output logic [PORT_D_DWIDTH-1:0] port_d_pmux_out_o,
@@ -125,17 +126,17 @@ module evo_xb
 
 `ifdef EVO_XB_INTERRUPTS
     // Interrupts
-    output logic                     xb_int_o,
-    input logic                      eic_swrst_i,
+    output logic 		     xb_int_o,
+    input logic 		     eic_swrst_i,
 `endif
     
     // Interface to evo_i2c_ctrl (Avalon MM Slave)
     input logic [CSR_AWIDTH-1:0]     avs_csr_address,
-    input logic                      avs_csr_read, 
-    output logic                     avs_csr_waitresponse,
-    output logic                     avs_csr_readdatavalid,
-    output logic                     avs_csr_waitrequest,
-    input logic                      avs_csr_write,
+    input logic 		     avs_csr_read, 
+    output logic 		     avs_csr_waitresponse,
+    output logic 		     avs_csr_readdatavalid,
+    output logic 		     avs_csr_waitrequest,
+    input logic 		     avs_csr_write,
     input logic [CSR_DWIDTH-1:0]     avs_csr_writedata,
     output logic [CSR_DWIDTH-1:0]    avs_csr_readdata
     );       
